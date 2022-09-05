@@ -4,7 +4,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 from flask import flash
 
 class User:
-    db = ""
+    db = "pet_finder"
     def __init__(self,data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -54,14 +54,14 @@ class User:
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(User.db).query_db(query,user)
         if len(results) >= 1:
-            flash("Email already taken.","register")
+            flash("Correo electrónico no es válido","register")
             is_valid=False
         if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid Email","register")
+            flash("Correo electrónico no es válido","register")
             is_valid=False
         if len(user['password']) < 8:
-            flash("Password must be at least 8 characters","register")
+            flash("Contraseña debe ser de mínimo 8 caracteres","register")
             is_valid= False
         if user['password'] != user['confirm']:
-            flash("Password doesn't match","register")
+            flash("Contraseñas no son iguales","register")
         return is_valid

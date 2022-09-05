@@ -1,8 +1,7 @@
 from flask import render_template,redirect,session,request, flash
 from flask_app import app
 from flask_app.models.user import User
-#from flask_app.models.appointment import Appointment
-from datetime import date
+from flask_app.models.post import Post
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
@@ -10,11 +9,11 @@ bcrypt = Bcrypt(app)
 def index():
     return render_template('index.html')
 
-@app.route('/register',methods=['POST'])
+@app.route('/register',methods=['POST', 'GET'])
 def register():
 
     if not User.validate_register(request.form):
-        return redirect('/')
+        return render_template('register.html')
     data ={ 
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
@@ -26,28 +25,28 @@ def register():
 
     return redirect('/dashboard')
 
-@app.route('/login',methods=['POST'])
+@app.route('/login',methods=['POST', 'GET'])
 def login():
     user = User.get_by_email(request.form)
 
     if not user:
-        flash("Invalid Email","login")
+        flash("Correo electrónico no es válido","login")
         return redirect('/')
     if not bcrypt.check_password_hash(user.password, request.form['password']):
-        flash("Invalid Password","login")
+        flash("Contraseña incorrecta","login")
         return redirect('/')
     session['user_id'] = user.id
     return redirect('/dashboard')
 
-#@app.route('/dashboard')
-#def dashboard():
-    #if 'user_id' not in session:
-        #return redirect('/logout')
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect('/logout')
     data ={
         'id': session['user_id']
     }
-    appointments= Appointment.get_all()
-    return render_template("dashboard.html",user=User.get_by_id(data),appointments=appointments)
+    posts= Post.get_all()
+    return render_template("dashboard.html",user=User.get_by_id(data),posts=posts)
 
 @app.route('/logout')
 def logout():
