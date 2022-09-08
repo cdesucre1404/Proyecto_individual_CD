@@ -31,7 +31,7 @@ class User:
     @classmethod
     def get_one(cls,data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
-        results = connectToMySQL(cls.db_name).query_db(query,data)
+        results = connectToMySQL(cls.db).query_db(query,data)
         return cls(results[0])
 
     @classmethod
@@ -54,7 +54,7 @@ class User:
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(User.db).query_db(query,user)
         if len(results) >= 1:
-            flash("Correo electrónico no es válido","register")
+            flash("Ingresar correo electrónico","register")
             is_valid=False
         if not EMAIL_REGEX.match(user['email']):
             flash("Correo electrónico no es válido","register")
