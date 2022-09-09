@@ -2,6 +2,7 @@ from flask import render_template,redirect,session,request, flash
 from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.post import Post
+from flask_app.models.profile import Profile
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
@@ -41,15 +42,17 @@ def login():
     session['user_id'] = user.id
     return redirect('/dashboard')
 
+
 @app.route('/dashboard')
 def dashboard():
-    if 'user_id' not in session:
-        return redirect('/logout')
-    data ={
+    data ={ 
         'id': session['user_id']
     }
-    posts= Post.get_all()
-    return render_template("dashboard.html",user=User.get_by_id(data),posts=posts)
+    ad=Post.get_all()
+    if 'user_id' not in session:
+        return redirect('/logout')
+
+    return render_template("dashboard.html", user=User.get_by_id(data), ad = ad)
 
 @app.route('/logout')
 def logout():

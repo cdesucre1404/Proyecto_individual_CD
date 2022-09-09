@@ -16,8 +16,8 @@
         <a class="navbar-brand" href="/dashboard">
             <img src="../static/images/mini_logo.jpg" width="150" height="42" class="d-inline-block align-top" alt="">
         </a>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2 rounded-pill" type="search" placeholder="&#xF002; Search" aria-label="Search"><button><i class="fa fa-search"></i></button>
+        <form class="form-inline" action="/dashboard" method="get">
+            <input class="form-control mr-sm-2 rounded-pill" type="search" placeholder="Buscar" aria-label="Search"><button><i class="fa fa-search"></i></button>
         </form>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,10 @@
             <div class="mr-auto"></div>
             <ul class="navbar-nav my-2 my-lg-0">
                 <li class="nav-item active pt-2">
-                    <a class="nav-link" href="/dashboard">Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/dashboard">Inicio</a>
+                </li>
+                <li class="nav-item active pt-2">
+                    <a class="nav-link" href="/new/post">Nuevo Anuncio</a>
                 </li>
                 <li class="nav-item dropdown">
                     <div class="nav-item dropdown">
@@ -44,39 +47,33 @@
     </nav>
 
     <div class="container mt-4 mb-5">
-        <div class="d-flex justify-content-center row">
-            <div class="col-md-8">
-                <div class="feed p-2">
-                    <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white border">
-                        <div class="feed-text px-2">
-                            <h6 class="text-black-50 mt-2">What's on your mind</h6>
-                        </div>
-                        <div class="feed-icon px-2"><i class="fa fa-long-arrow-up text-black-50"></i></div>
-                    </div>
+        <div class="d-flex justify-content-center">
+            <div class="col-8">
+                <div class="feed">
+                    {% for post in posts %}
                     <div class="bg-white border mt-2">
                         <div>
                             <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                                 <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" width="45">
-                                    <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">Thomson ben</span><span class="text-black-50 time">40 minutes ago</span></div>
+                                    <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{{user.first_name}} {{user.last_name}}</span><span class="text-black-50 time">40 min</span></div>
                                 </div>
                                 <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
                             </div>
                         </div>
-                        <div class="p-2 px-3"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
+                        <tr>
+                            <td>{{post.status}}</td>
+                            <td>{{post.summary}}</td>
+                            <td>{{post.breed}}</td>
+                            <td>{{post.color}}</td>
+                            <td>{{post.location}}</td>
+                            <td class="text-decoration">
+                                <a href="">Edit  |</a>
+                                <a href="">Delete</a>
+                            </td>
+                        </tr>
                         <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
                     </div>
-                    <div class="bg-white border mt-2">
-                        <div>
-                            <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
-                                <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" width="45">
-                                    <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">Thomson ben</span><span class="text-black-50 time">40 minutes ago</span></div>
-                                </div>
-                                <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
-                            </div>
-                        </div>
-                        <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="https://i.imgur.com/aoKusnD.jpg"></div>
-                        <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -86,5 +83,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
+	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.min.js"></script>
+	<script src="js/script.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</body>
     </html>
