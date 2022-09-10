@@ -45,14 +45,13 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    data ={ 
-        'id': session['user_id']
-    }
-    ad=Post.get_all()
     if 'user_id' not in session:
         return redirect('/logout')
-
-    return render_template("dashboard.html", user=User.get_by_id(data), ad = ad)
+    data ={
+        'id': session['user_id']
+    }
+    ads= Post.get_all()
+    return render_template("dashboard.html",user=User.get_by_id(data),ads=ads)
 
 @app.route('/logout')
 def logout():

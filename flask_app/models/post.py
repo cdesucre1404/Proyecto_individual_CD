@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
-from datetime import date
+from datetime import date, datetime
+import math
 
 class Post:
     db_name = 'pet_finder'
@@ -23,6 +24,20 @@ class Post:
         return connectToMySQL(cls.db_name).query_db(query, data)
 
 
+    def time_span(self):
+        now = datetime.now()
+        delta = now - self.posted_at
+        print(delta.days)
+        print(delta.total_seconds())
+        if delta.days > 0:
+            return f"{delta.days} days ago"
+        elif (math.floor(delta.total_seconds() / 60)) >= 60:
+            return f"{math.floor(math.floor(delta.total_seconds() / 60)/60)} hours ago"
+        elif delta.total_seconds() >= 60:
+            return f"{math.floor(delta.total_seconds() / 60)} minutes ago"
+        else:
+            return f"{math.floor(delta.total_seconds())} seconds ago"
+
     @classmethod
     def get_all(cls):
         query = "SELECT * FROM posts,users WHERE users.id = posts.user_id;"
@@ -31,6 +46,15 @@ class Post:
         for row in results:
             all_posts.append( cls(row) )
         return all_posts
+
+    @classmethod
+    def list_all(cls, data):
+        query = "SELECT * FROM posts JOIN users ON posts.user_id = %(id)s WHERE travels.destinations.travel_id = travels.travels.id;"
+        results =  connectToMySQL(cls.db_name).query_db(query,data)
+        list_posts = []
+        for row in results:
+            list_posts.append( cls(row) )
+        return list_posts
 
     
     @classmethod
@@ -41,7 +65,7 @@ class Post:
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE posts SET summary=%(summary)s, breed=%(breed)s, color=%(color)s, location=%(location)s, status=%(status)s, posted_at=%(posted_at)s, updated_at=NOW() WHERE id = %(id)s;"
+        query = "UPDATE posts SET summary=%(summary)s, breed=%(breed)s, color=%(color)s, location=%(location)s, status=%(status)s, updated_at=NOW() WHERE id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query,data)
 
     @staticmethod

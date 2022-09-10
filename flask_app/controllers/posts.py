@@ -4,6 +4,7 @@ from flask_app.models.post import Post
 from flask_app.models.user import User
 from flask_app.models.profile import Profile
 
+
 @app.route('/new/post')
 def new_post():
     if 'user_id' not in session:
@@ -30,4 +31,5 @@ def create_post():
 
     Post.save(data)
     return redirect('/dashboard')
+
 
