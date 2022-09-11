@@ -49,7 +49,7 @@ class Post:
 
     @classmethod
     def list_all(cls, data):
-        query = "SELECT * FROM posts JOIN users ON posts.user_id = %(id)s WHERE travels.destinations.travel_id = travels.travels.id;"
+        query = "SELECT * FROM posts, users WHERE posts.id = user_id"
         results =  connectToMySQL(cls.db_name).query_db(query,data)
         list_posts = []
         for row in results:

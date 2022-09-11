@@ -23,7 +23,7 @@ class Profile:
 
     @classmethod
     def get_one(cls,data):
-        query = "SELECT * FROM profiles WHERE id = %(id)s;"
+        query = "SELECT * FROM profiles WHERE id = %(user_id)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         return cls(results[0])
 

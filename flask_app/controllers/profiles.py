@@ -8,8 +8,8 @@ from flask_app.models.profile import Profile
 def profile():
     if 'user_id' not in session:
         return redirect('/logout')
+    Profile.get_one()
     data ={
         'id': session['user_id']
     }
-    profile= Profile.get_one()
-    return render_template("profile.html",user=User.get_by_id(data),profile=profile)
+    return render_template("profile.html",user=User.get_by_id(data))

@@ -53,6 +53,7 @@ def dashboard():
     ads= Post.get_all()
     return render_template("dashboard.html",user=User.get_by_id(data),ads=ads)
 
+
 @app.route('/logout')
 def logout():
     session.clear()
