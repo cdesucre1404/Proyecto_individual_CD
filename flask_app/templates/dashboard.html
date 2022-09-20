@@ -33,7 +33,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <div class="nav-item dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="https://www.tutorialrepublic.com/examples/images/avatar/3.jpg" class="avatar rounded-circle" alt="Avatar"> {{user.first_name}} <b class="caret"></b></a>
+                        <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="../static/images/user.jpeg" width="45" class="avatar rounded-circle" alt="Avatar"> {{user.first_name}} <b class="caret"></b></a>
                         <div class="dropdown-menu">
                             <a href="/profile" class="dropdown-item"><i class="fa fa-user-o"></i> Perfil</a>
                             <a href="/settings" class="dropdown-item"><i class="fa fa-cog"></i> Configuración</a>
@@ -54,8 +54,12 @@
                     <div class="bg-white border mt-2">
                         <div>
                             <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
-                                <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" width="45">
+                                <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="../static/images/user.jpeg" width="45">
                                     <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{{user.first_name}} {{user.last_name}}</span><span class="text-black-50 time">{{ad.time_span()}}</span></div>
+                                </div>
+                                <div class="p5">
+                                <a href="/edit/post/{{ad.id}}">Editar     |</a>
+                                <a href="/delete/post/{{ad.id}}">Borrar</a>
                                 </div>
                                 <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
                             </div>
@@ -63,6 +67,11 @@
 
                         <div class="justify-content-between col-15 pl-5 pt-2">
                             <div>
+                                {% if filename %}
+                                <div style="padding: 20px;">
+                                    <img src="{{url_for('display_image', filename=filename)}}">
+                                </div>
+                                {% endif %}
                                 <div>
                                     <label class="font-weight-bold">Estatus:</label> {{ad.status}}
                                 </div>
@@ -80,13 +89,12 @@
                                 </div>
                             </div>
                             <div class="small d-flex pt-4">
-
                                 </div>
                                 </div>
                                 <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                                 <div class="d-flex flex-start w-100">
                                     <img class="rounded-circle shadow-1-strong me-2 p-2"
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                                    src="../static/images/user.jpeg" alt="avatar" width="40"
                                     height="40" />
                                     <div class="form-outline w-100">
                                     <textarea class="form-control"  placeholder="Mensaje" id="comment" rows="4"
@@ -96,7 +104,6 @@
                                 </div>
                                 <div class="float-end mt-2 pt-1 pl-3">
                                     <button type="submit" class="btn btn-warning btn-sm" value="Submit">Enviar</button>
-                                    <button type="reset" class="btn btn-outline-warning btn-sm" value="Reset">Cancelar</button>
                                 </div>
                         </div>
                     </div>

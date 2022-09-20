@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Post</title>
+    <title>Edit Post</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white border">
-        <a class="navbar-brand" href="/new/post">
+        <a class="navbar-brand">
             <img src="../static/images/mini_logo.jpg" width="150" height="42" class="d-inline-block align-top" alt="">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -22,7 +22,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <div class="nav-item dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="../static/images/user.jpeg" width="45" class="avatar rounded-circle" alt="Avatar"> {{user.first_name}} <b class="caret"></b></a>
+                        <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="../static/images/user.jpeg" class="avatar rounded-circle" alt="Avatar"> {{user.first_name}} <b class="caret"></b></a>
                         <div class="dropdown-menu">
                             <a href="/profile" class="dropdown-item"><i class="fa fa-user-o"></i> Perfil</a>
                             <a href="/settings" class="dropdown-item"><i class="fa fa-cog"></i> Configuración</a>
@@ -36,7 +36,7 @@
     </nav>
     <div class="container mt-3 mb-4">
         <div class="d-flex justify-content-center">
-            <div class="col-10">
+            <div class="col-8">
                 <div class="feed">
                     <div class="container mt-0 mb-5">
                         <div class="d-flex justify-content-center">
@@ -48,19 +48,8 @@
                                                 <img class="rounded-circle pr-1" src="../static/images/user.jpeg" width="50" alt="">
                                             </figure>
                                             <div class="ml-4">
-                                                <form action="/create/post" method="post">
+                                                <form action="/update/post" method="post">
                                                     <h5>Ingresa los detalles de la mascota</h5> 
-                                                    <p>
-                                                        {% with message = get_flashed_messages(category_filter=['upload_image'])%}
-                                                            {% if messages %}
-                                                            <ul>
-                                                                {% for message in messages %}
-                                                                    <li>{{ message }}</li>
-                                                                {% endfor %}
-                                                            </ul>
-                                                            {% endif %}
-                                                        {% endwith %}
-                                                    </p>
                                                     <div class="form-group">
                                                         <label for="status">Status:</label>
                                                         <div class="input-group-text bg-light mb-2">
@@ -69,7 +58,7 @@
                                                             <input type="radio" name="status" value="2" class="form-control-sm mr-1" id="encontrado">
                                                             <label for="2" class="text-dark pr-3 pt-2">Encontrado</label><br>
                                                             <input type="radio" name="status" value="3" class="form-control-sm mr-1" id="recogido">
-                                                            <label for="3" class="text-dark pr-3 pt-2">En Adopción</label><br>
+                                                            <label for="3" class="text-dark pr-3 pt-2">Recogido</label><br>
                                                         </div>
                                                         <label for="summary">
                                                             <textarea class="form-control form-control-lg mb-3" name="summary" id="summary" rows="2" placeholder="escribe un pequeño resumen" cols="100"></textarea>
@@ -95,7 +84,7 @@
                                                             <img src="{{url_for('display_image', filename=filename)}}" alt="">
                                                         </div>
                                                         {% endif %}
-                                                        <form method = "POST" action="/upload" enctype = "multipart/form-data">
+                                                        <form method = "POST" enctype = "multipart/form-data">
                                                             <dl>
                                                                 <p>
                                                                     <input type = "file" name = "file" class="form-control" autocomplete="off" required/>

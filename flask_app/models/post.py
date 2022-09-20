@@ -23,6 +23,11 @@ class Post:
         query = "INSERT INTO posts (summary, breed, color, location, status, user_id) VALUES (%(summary)s,%(breed)s,%(color)s,%(location)s, %(status)s, %(user_id)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
+    @classmethod
+    def order(cls,data):
+        query = "SELECT * FROM pots ORDER BY id DESC;"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+
 
     def time_span(self):
         now = datetime.now()
@@ -66,6 +71,11 @@ class Post:
     @classmethod
     def update(cls, data):
         query = "UPDATE posts SET summary=%(summary)s, breed=%(breed)s, color=%(color)s, location=%(location)s, status=%(status)s, updated_at=NOW() WHERE id = %(id)s;"
+        return connectToMySQL(cls.db_name).query_db(query,data)
+
+    @classmethod
+    def delete(cls,data):
+        query = "DELETE FROM posts WHERE id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query,data)
 
     @staticmethod
