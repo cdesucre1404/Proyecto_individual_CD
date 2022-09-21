@@ -13,19 +13,19 @@ class Post:
         self.color = db_data['color']
         self.location = db_data['location']
         self.status = db_data['status']
-        self.posted_at = db_data['posted_at']
         self.user_id = db_data['user_id']
+        self.posted_at = db_data['posted_at']
         self.created_at = db_data['created_at']
         self.updated_at = db_data['updated_at']
 
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO posts (summary, breed, color, location, status, user_id) VALUES (%(summary)s,%(breed)s,%(color)s,%(location)s, %(status)s, %(user_id)s);"
+        query = "INSERT INTO posts (summary, breed, color, location, status, user_id) VALUES (%(summary)s,%(breed)s,%(color)s,%(location)s, %(status)s, %(user_id)s);" 
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     @classmethod
     def order(cls,data):
-        query = "SELECT * FROM pots ORDER BY id DESC;"
+        query = "SELECT * FROM posts ORDER BY id DESC;"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
 
@@ -45,21 +45,12 @@ class Post:
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM posts,users WHERE users.id = posts.user_id;"
+        query = "SELECT * FROM posts,users WHERE users.id = posts.user_id ORDER BY posts.id DESC;"
         results =  connectToMySQL(cls.db_name).query_db(query)
         all_posts = []
         for row in results:
             all_posts.append( cls(row) )
         return all_posts
-
-    @classmethod
-    def list_all(cls, data):
-        query = "SELECT * FROM posts, users WHERE posts.id = user_id"
-        results =  connectToMySQL(cls.db_name).query_db(query,data)
-        list_posts = []
-        for row in results:
-            list_posts.append( cls(row) )
-        return list_posts
 
     
     @classmethod

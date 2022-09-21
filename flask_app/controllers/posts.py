@@ -4,18 +4,18 @@ from flask_app.models.post import Post
 from flask_app.models.user import User
 from werkzeug.utils import secure_filename
 import os
+import urllib.request
 
-UPLOAD_FOLDER = '/pet_finder/flask_app/static/uploads'
+UPLOAD_FOLDER = 'pet_finder/flask_app/static/uploads/'
 
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_PATH'] = 16*120*120
+app.config['MAX_CONTENT_PATH'] = 16*800*800
 
 ALLOWED_EXTENTIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENTIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENTIONS
 
 @app.route('/new/post')
 def new_post():
@@ -97,7 +97,7 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #print('upload_image filename: ' + filename')
+        print('upload_image filename: ' + filename)
         flash('Imagen cargada correctamente')
         return render_template('dashboard.html', filename=filename)
     else:
@@ -107,4 +107,4 @@ def upload_image():
 @app.route('/dislay/<filename>')
 def display_image(filename):
     #print('display_image filename:' + filename)
-    return redirect(url_for('static', filename='/uploads' + filename), code=301)
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)

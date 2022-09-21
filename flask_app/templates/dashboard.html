@@ -67,11 +67,11 @@
 
                         <div class="justify-content-between col-15 pl-5 pt-2">
                             <div>
-                                {% if filename %}
-                                <div style="padding: 20px;">
-                                    <img src="{{url_for('display_image', filename=filename)}}">
+                            {% if filename %}
+                                <div>
+                                    <img src="{{ url_for('display_image', filename=filename) }}">
                                 </div>
-                                {% endif %}
+                            {% endif %}
                                 <div>
                                     <label class="font-weight-bold">Estatus:</label> {{ad.status}}
                                 </div>

@@ -50,17 +50,6 @@
                                             <div class="ml-4">
                                                 <form action="/create/post" method="post">
                                                     <h5>Ingresa los detalles de la mascota</h5> 
-                                                    <p>
-                                                        {% with message = get_flashed_messages(category_filter=['upload_image'])%}
-                                                            {% if messages %}
-                                                            <ul>
-                                                                {% for message in messages %}
-                                                                    <li>{{ message }}</li>
-                                                                {% endfor %}
-                                                            </ul>
-                                                            {% endif %}
-                                                        {% endwith %}
-                                                    </p>
                                                     <div class="form-group">
                                                         <label for="status">Status:</label>
                                                         <div class="input-group-text bg-light mb-2">
@@ -68,7 +57,7 @@
                                                             <label for="1" class="text-dark pr-3 pt-2">Perdido</label><br>
                                                             <input type="radio" name="status" value="2" class="form-control-sm mr-1" id="encontrado">
                                                             <label for="2" class="text-dark pr-3 pt-2">Encontrado</label><br>
-                                                            <input type="radio" name="status" value="3" class="form-control-sm mr-1" id="recogido">
+                                                            <input type="radio" name="status" value="3" class="form-control-sm mr-1" id="en adopción">
                                                             <label for="3" class="text-dark pr-3 pt-2">En Adopción</label><br>
                                                         </div>
                                                         <label for="summary">
@@ -90,21 +79,33 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {% if filename %}
-                                                        <div style="padding: 20px;">
-                                                            <img src="{{url_for('display_image', filename=filename)}}" alt="">
-                                                        </div>
-                                                        {% endif %}
-                                                        <form method = "POST" action="/upload" enctype = "multipart/form-data">
-                                                            <dl>
-                                                                <p>
-                                                                    <input type = "file" name = "file" class="form-control" autocomplete="off" required/>
-                                                                <p>
-                                                            </dl>
+                                                        
+                                                        <div class="container">
+                                                        <div class="row">
+                                                            
                                                             <p>
-                                                                <input type = "submit" value="Upload" class="btn btn-warning"/>
+                                                                {% with messages = get_flashed_messages() %}
+                                                                    {% if messages %}
+                                                                        <ul>
+                                                                        {% for message in messages %}
+                                                                        <li>{{ message }}</li>
+                                                                        {% endfor %}
+                                                                        </ul>
+                                                                    {% endif %}
+                                                                {% endwith %}
                                                             </p>
-                                                        </form> 
+                                                            <form method="post"  action="/upload" enctype="multipart/form-data">
+                                                                <dl>
+                                                                    <p>
+                                                                        <input type="file" name="file" class="form-control" autocomplete="off" required>
+                                                                    </p>
+                                                                </dl>
+                                                                <p>
+                                                                    <input type="submit" value="Submit" class="btn btn-info">
+                                                                </p>
+                                                            </form>
+                                                        </div>
+                                                    <div>
                                                         <ul style="list-style: none;" class="list-group list-group-horizontal d-flex flex-row-reverse">
                                                             <li>
                                                                 <button type="submit" class="btn-warning">Post</button>
